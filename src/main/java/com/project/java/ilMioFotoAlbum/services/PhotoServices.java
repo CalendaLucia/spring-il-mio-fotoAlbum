@@ -19,7 +19,7 @@ public class PhotoServices {
     PhotoRepository photoRepository;
 
 
-    // Metodo privato per convertire un oggetto MultipartFile in un array di byte
+    // Metodo privato per convertire un oggetto MultipartFile in un array di byte.
     private byte[] multipartFileToByteArray(MultipartFile mpf) {
         byte[] bytes = null;
         if (mpf != null && !mpf.isEmpty()) {

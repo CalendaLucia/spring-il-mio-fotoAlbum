@@ -19,6 +19,7 @@ public class Seeder implements CommandLineRunner {
     @Autowired
     PhotoRepository photoRepository;
 
+    // Classe che implementa CommandLineRunner per eseguire un seed custom lato java:
     @Override
     public void run(String... args) throws Exception {
 

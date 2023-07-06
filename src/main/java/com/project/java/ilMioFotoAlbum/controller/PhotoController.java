@@ -30,6 +30,7 @@ public class PhotoController {
     @Autowired
     PhotoServices photoServices;
 
+    //lettura dati da database
     @GetMapping
     public String index(@RequestParam(name = "keyword", required = false) String search,
                         Model model) {
