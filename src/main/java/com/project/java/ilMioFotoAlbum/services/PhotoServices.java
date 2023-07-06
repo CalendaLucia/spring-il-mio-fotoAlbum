@@ -64,6 +64,24 @@ public class PhotoServices {
         }
     }
 
+    //metodo per creare una nuova foto
+    public Photo create(Photo photo) {
+        //creo la foto da salvare
+        Photo photoToPersist = new Photo();
+        photoToPersist.setTitle(photo.getTitle());
+        photoToPersist.setDescription(photo.getDescription());
+        photoToPersist.setUrl(photo.getUrl());
+        photoToPersist.setVisible(photo.isVisible());
+        photoToPersist.setCategories(photo.getCategories());
+        return photoRepository.save(photoToPersist);
+    }
+
+    //metodo che crea una nuova foto a partire da una PhotoDto
+    public  Photo create(PhotoDto formPhoto) {
+        Photo photo = mapFormPhotoToPhoto(formPhoto);
+        return create(photo);
+    }
+
 
 
     //metodo per creare un formPhoto a partire dall'id di una photo salvato su db

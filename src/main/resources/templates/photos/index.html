@@ -15,6 +15,11 @@
         <div th:each="photo : ${photos}" class="col-md-2">
             <div class="card h-100">
                 <img th:src="@{|files/cover/${photo.id}|}" class="img-fluid" alt="image">
+                <div class="card-body">
+                    <a th:href="@{/details}" class="btn">
+                        <i class="fa-regular fa-eye"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>

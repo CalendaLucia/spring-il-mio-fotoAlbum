@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -49,4 +50,23 @@ public class PhotoController {
         model.addAttribute("search",search == null ? "" : search);
         return "photos/index";
     }
+
+    //controller per ricerca singolo Id
+    @GetMapping("/{id}")
+    public String show(@PathVariable("id") Integer photoId, Model model) {
+        Photo photo = photoServices.getById(photoId);
+        List<Category> categories = photo.getCategories();
+        model.addAttribute("photo", photo);
+        model.addAttribute("categories", categories);
+
+        return "photos/details";
+    }
+
+
 }
+
+
+
+
+
+
