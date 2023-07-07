@@ -1,5 +1,6 @@
 package com.project.java.ilMioFotoAlbum.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,6 +28,7 @@ public class Photo {
     private byte[] url;
     private boolean visible;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "photo_category", joinColumns = @JoinColumn(name = "photo_id"),

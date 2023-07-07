@@ -10,10 +10,12 @@ import com.project.java.ilMioFotoAlbum.services.PhotoServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -39,6 +41,7 @@ public class PhotoController {
     //lettura dati da database
     @GetMapping
     public String index(@RequestParam(name = "keyword", required = false) String search,
+                        Authentication authentication,
                         Model model) {
         List<Photo> photos;
         if (search == null || search.isBlank()) {
@@ -47,11 +50,14 @@ public class PhotoController {
         } else {
             photos = photoRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrCategories_Name(search, search, search);
 
-            if (photos.isEmpty()) {
-                model.addAttribute("message", "Sorry, catalog is empty");
-            }
         }
-
+        if (photos.isEmpty()) {
+            model.addAttribute("message", "Sorry, catalog is empty");
+        }
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            model.addAttribute("username", username);
+        }
         model.addAttribute("photos", photos);
         model.addAttribute("search",search == null ? "" : search);
         return "photos/index";
@@ -103,10 +109,13 @@ public class PhotoController {
         try {
             //recupero i dati di quella foto da database
             PhotoDto formPhoto = photoServices.getPhotoFormById(id);
+
             //aggiungo la foto al model
             model.addAttribute("photo", formPhoto);
             //aggiungo la lista delle categorie al model
             model.addAttribute("categories", categoryRepository.findAll());
+
+
             return "/photos/create";
         } catch (ResponseStatusException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -117,7 +126,8 @@ public class PhotoController {
 
     @PostMapping("/edit/{id}")
     public String update(@PathVariable Integer id,
-                         @RequestParam("selectedCategorieIds") List<Integer> categorieIds,
+                         @RequestParam("selectedCategoriesIds") List<Integer> categoriesIds,
+                         @RequestParam(value = "coverFile") MultipartFile coverFile,
                          @Valid @ModelAttribute("photo") PhotoDto formPhoto,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes){
@@ -128,12 +138,13 @@ public class PhotoController {
 
         try {
                photoServices.update(formPhoto);
+
         }catch (ResponseStatusException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
 
         //Recupero le categorie selezionate dal repository delle categorie usando gli id
-        List<Category> selectedCategories = categoryRepository.findAllById(categorieIds);
+        List<Category> selectedCategories = categoryRepository.findAllById(categoriesIds);
         //imposto le categorie alla foto
         formPhoto.setCategories(selectedCategories);
 

@@ -17,6 +17,13 @@
   <form th:action="@{${photo.id == null ? '/photos/create' : '/photos/edit/' + photo.id}}" method="post"
         th:object="${photo}" id="photo-form" class="row"
         enctype="multipart/form-data">
+    <input type="hidden" th:field="*{id}">
+
+    <div class="row">
+      <div class="col-2" style="width:150px;">
+        <img class="img-fluid"  th:src="@{|/files/cover/${photo.id}|}" alt="current cover" th:if="${photo.id != null}">
+      </div>
+    </div>
     <div class="col-6">
       <label class="form-label" for="photo-name">Name</label>
       <input class="form-control" type="text" id="photo-name" th:field="*{title}"
@@ -28,6 +35,7 @@
         </ul>
       </div>
     </div>
+
     <div class="col-6">
       <label class="form-label" for="coverFile">Photo</label>
       <input class="form-control" type="file" id="coverFile" th:field="*{coverFile}"
@@ -39,6 +47,7 @@
         </ul>
       </div>
     </div>
+
 
     <div class="col-12">
       <label class="form-label" for="description">Description</label>
@@ -54,9 +63,8 @@
 
 
     <div class="col-6 d-flex justify-content-around align-items-end flex-wrap">
-      <label class="form-check-label" >Choose a category or more</label>
-      <input type="hidden" name="selectedCategoriesIds" th:value="${selectedCategoriesIds}"/>
       <div class="form-check" th:each="cat : ${categories}">
+        <input type="hidden" name="selectedCategoriesIds" th:value="${selectedCategoriesIds}"/>
         <input class="form-check-input" type="checkbox" th:value="${cat.id}" name="selectedCategoriesIds"
                th:id="'flexCheckDefault_' + ${cat.id}">
         <label class="form-check-label" th:for="'flexCheckDefault_' + ${cat.id}" th:text="${cat.name}"></label>

@@ -97,11 +97,16 @@ public class PhotoServices {
 
         photoDb.setTitle(photo.getTitle());
         photoDb.setDescription(photo.getDescription());
-        photoDb.setUrl(photo.getUrl());
+
         photoDb.setVisible(photo.isVisible());
         photoDb.setCategories(photo.getCategories());
         return photoRepository.save(photoDb);
     }
+
+
+
+
+
 
 
 
