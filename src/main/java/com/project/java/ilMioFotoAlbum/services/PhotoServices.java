@@ -90,6 +90,20 @@ public class PhotoServices {
         return mapPhotoToFormPhoto(photo);
     }
 
+    //metodo update per form
+    public Photo update(PhotoDto formPhoto) {
+        Photo photo = mapFormPhotoToPhoto(formPhoto);
+        Photo photoDb = getById(photo.getId());
+
+        photoDb.setTitle(photo.getTitle());
+        photoDb.setDescription(photo.getDescription());
+        photoDb.setUrl(photo.getUrl());
+        photoDb.setVisible(photo.isVisible());
+        photoDb.setCategories(photo.getCategories());
+        return photoRepository.save(photoDb);
+    }
+
+
 
 }
 

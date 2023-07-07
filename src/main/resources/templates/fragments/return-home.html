@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:insert="~{/fragments/head :: head(pageTitle='return-home')}"></head>
+<!-- fragments.html -->
+<th:block th:fragment="return-home">
+  <a th:href="@{/photos}" class="btn btn-outline-dark m-5">Back to Home</a>
+</th:block>
+</body>
+</html>

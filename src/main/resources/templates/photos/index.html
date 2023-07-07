@@ -13,12 +13,22 @@
 <div class="container bg-dark mt-5 p-4 w-100">
     <div class="row">
         <div th:each="photo : ${photos}" class="col-md-2">
-            <div class="card h-100">
-                <img th:src="@{|files/cover/${photo.id}|}" class="img-fluid" alt="image">
-                <div class="card-body">
-                    <a th:href="@{/details}" class="btn">
+            <div class="card h-75 w-100">
+                <img th:src="@{|files/cover/${photo.id}|}" class="h-75 w-100 img-fluid" alt="image">
+                <div class="card-body d-flex align-items-center">
+                    <a th:href="@{/photos/{id}(id=${photo.id})}" class="btn">
                         <i class="fa-regular fa-eye"></i>
                     </a>
+                    <a th:href="@{|/photos/edit/${photo.id}|}"
+                       sec:authorize="hasAuthority('ADMIN')">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </a>
+                    <form class="d-inline" th:action="@{|/photos/delete/${photo.id}|}"
+                          sec:authorize="hasAuthority('ADMIN')" method="post">
+                        <button class="btn " type="submit">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>

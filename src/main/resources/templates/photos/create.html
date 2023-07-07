@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="~{/fragments/head :: head}"
+      th:with="pageTitle=${photo.id == null ? 'Add a new Photo' : 'Edit photo'}">
+  <title th:text="${pageTitle}"></title>
+</head>
+<body>
+<div class="container-fluid pr-3 mt-5">
+  <nav th:replace="~{/fragments/navbar :: navbar(current='create')}"></nav>
+</div>
+
+<div class="container w-75">
+  <h2 th:text="${photo.id == null ? 'Add a new Photo' : 'Edit Photo'}" class="text-danger p-2"></h2>
+</div>
+
+<div class="container w-75">
+  <form th:action="@{${photo.id == null ? '/photos/create' : '/photos/edit/' + photo.id}}" method="post"
+        th:object="${photo}" id="photo-form" class="row"
+        enctype="multipart/form-data">
+    <div class="col-6">
+      <label class="form-label" for="photo-name">Name</label>
+      <input class="form-control" type="text" id="photo-name" th:field="*{title}"
+             th:classappend="${#fields.hasErrors('title')} ? 'is-invalid' : ''">
+      <div class="form-text">Name must not be blank</div>
+      <div th:if="${#fields.hasErrors('title')}" class="invalid-feedback">
+        <ul>
+          <li th:each="err : ${#fields.errors('title')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-6">
+      <label class="form-label" for="coverFile">Photo</label>
+      <input class="form-control" type="file" id="coverFile" th:field="*{coverFile}"
+             th:classappend="${#fields.hasErrors('coverFile')} ? 'is-invalid' : ''">
+      <div class="form-text">Photo is required.</div>
+      <div th:if="${#fields.hasErrors('coverFile')}" class="invalid-feedback">
+        <ul>
+          <li th:each="err : ${#fields.errors('coverFile')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label" for="description">Description</label>
+      <textarea class="form-control" id="description" th:field="*{description}" rows="5"
+                th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"></textarea>
+      <div class="form-text">Description is required.</div>
+      <div th:if="${#fields.hasErrors('description')}" class="invalid-feedback">
+        <ul>
+          <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div class="col-6 d-flex justify-content-around align-items-end flex-wrap">
+      <label class="form-check-label" >Choose a category or more</label>
+      <input type="hidden" name="selectedCategoriesIds" th:value="${selectedCategoriesIds}"/>
+      <div class="form-check" th:each="cat : ${categories}">
+        <input class="form-check-input" type="checkbox" th:value="${cat.id}" name="selectedCategoriesIds"
+               th:id="'flexCheckDefault_' + ${cat.id}">
+        <label class="form-check-label" th:for="'flexCheckDefault_' + ${cat.id}" th:text="${cat.name}"></label>
+      </div>
+    </div>
+
+    <div class="col-12 mt-3">
+      <button class="btn btn-primary" type="submit">Save</button>
+      <a class="btn btn-primary" th:href="@{/photos}">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<th:block th:replace="fragments/return-home :: return-home"></th:block>
+
+</body>
+</html>

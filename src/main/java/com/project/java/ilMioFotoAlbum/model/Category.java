@@ -9,14 +9,6 @@ import java.util.List;
 public class Category {
 
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -27,12 +19,13 @@ public class Category {
 
     public Category() {
     }
-    public Category(Integer id, String name, List<Photo> photoList) {
-        this.id = id;
-        this.name = name;
-        this.photoList = photoList;
+    public Integer getId() {
+        return id;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
 
     public String getName() {

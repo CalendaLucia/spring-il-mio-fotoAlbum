@@ -8,9 +8,23 @@
   <nav th:replace="~{/fragments/navbar :: navbar(current='Details')}"></nav>
 </div>
 
-<h1>
-  questa è la pagina di dettaglio della foto
-</h1>
+<div class="container p-3 mt-5">
+  <h2>Dettaglio della foto</h2>
+  <div class="card w-50 h-50">
+    <img th:src="@{/files/cover/{id}(id=${photo.id})}" class=" w-50 h-50 img-fluid" alt="Immagine">
+    <div class="card-body">
+      <p th:text="|Title: ${photo.title}|" class="card-text"></p>
+      <p th:text="|Description: ${photo.description}|" class="card-text"></p>
+
+      <h5>Categorie:</h5>
+      <ul>
+        <li th:each="category : ${categories}" th:text="${category.name}"></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<th:block th:replace="fragments/return-home :: return-home"></th:block>
 
 </body>
 </html>
