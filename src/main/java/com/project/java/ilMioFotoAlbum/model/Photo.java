@@ -17,6 +17,7 @@ public class Photo {
     private Integer id;
 
 
+    @NotBlank
     private String title;
     @Column(length = 500)
     private String description;

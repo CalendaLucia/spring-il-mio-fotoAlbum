@@ -1,6 +1,7 @@
 package com.project.java.ilMioFotoAlbum.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @NotBlank
     private String name;
 
     @ManyToMany(mappedBy = "categories")

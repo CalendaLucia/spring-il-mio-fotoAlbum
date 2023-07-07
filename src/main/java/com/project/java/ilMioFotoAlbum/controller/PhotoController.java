@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.naming.AuthenticationException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -42,13 +43,12 @@ public class PhotoController {
         List<Photo> photos;
         if (search == null || search.isBlank()) {
             photos = photoRepository.findAll();
-        } else {
-            Category category = categoryRepository.findByName(search);
 
-            if (category != null) {
-                photos = photoRepository.findByCategoriesIn(Collections.singletonList(category));
-            }else {
-                photos = new ArrayList<>();
+        } else {
+            photos = photoRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrCategories_Name(search, search, search);
+
+            if (photos.isEmpty()) {
+                model.addAttribute("message", "Sorry, catalog is empty");
             }
         }
 

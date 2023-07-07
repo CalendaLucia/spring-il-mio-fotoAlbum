@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:insert="~{/fragments/head :: head(pageTitle='Login')}"></head>
+
+<body>
+<div class="container-fluid p-3">
+  <nav th:replace="~{/fragments/navbar :: navbar(current='Login')}"></nav>
+</div>
+    <div class="container p-3 mt-5">
+      <h1>Login page</h1>
+      <p th:if="${loginError}" class="error">Wrong user or password</p>
+      <form th:action="@{/login}" method="post">
+        <label for="username">Username</label>:
+        <input type="text" id="username" name="username" autofocus="autofocus"/> <br/>
+        <label for="password">Password</label>:
+        <input type="password" id="password" name="password"/> <br/>
+        <input type="submit" value="Log in"/>
+      </form>
+    </div>
+
+</body>
+</html>
