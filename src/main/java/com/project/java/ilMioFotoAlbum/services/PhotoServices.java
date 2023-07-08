@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -94,13 +95,25 @@ public class PhotoServices {
     public Photo update(PhotoDto formPhoto) {
         Photo photo = mapFormPhotoToPhoto(formPhoto);
         Photo photoDb = getById(photo.getId());
-
         photoDb.setTitle(photo.getTitle());
         photoDb.setDescription(photo.getDescription());
-
         photoDb.setVisible(photo.isVisible());
         photoDb.setCategories(photo.getCategories());
         return photoRepository.save(photoDb);
+    }
+
+    public Photo setPhotoVisibility(Integer photoId,boolean visibility) {
+        Optional<Photo> optionalPhoto = photoRepository.findById(photoId);
+
+        if (optionalPhoto.isPresent()) {
+            Photo photo = optionalPhoto.get();
+            photo.setVisible(visibility);
+            return   photoRepository.save(photo);
+
+        }else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+
     }
 
 

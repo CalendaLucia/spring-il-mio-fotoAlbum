@@ -68,11 +68,31 @@ public class PhotoController {
     public String show(@PathVariable("id") Integer photoId, Model model) {
         Photo photo = photoServices.getById(photoId);
         List<Category> categories = photo.getCategories();
+
+        String visibility = String.valueOf(photo.isVisible());
+
         model.addAttribute("photo", photo);
         model.addAttribute("categories", categories);
+        model.addAttribute("visibility", visibility);
 
         return "photos/details";
     }
+
+    @GetMapping("/visibility/{id}")
+    public String setVisibility(@PathVariable("id") Integer photoId,
+                                RedirectAttributes redirectAttributes) {
+        Photo photo = photoServices.getById(photoId);
+        boolean visibility = !photo.isVisible(); // Inverti il valore utilizzando l'operatore XOR
+        photoServices.setPhotoVisibility(photoId, visibility);
+        redirectAttributes.addAttribute("visibility", visibility);
+        return "redirect:/photos/{id}";
+    }
+
+
+
+
+
+
 
     //Controller che gestisce la creazione del form per l'inserimento di una nuova foto
 

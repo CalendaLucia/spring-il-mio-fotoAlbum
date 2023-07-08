@@ -20,6 +20,28 @@
       <ul>
         <li th:each="category : ${categories}" th:text="${category.name}"></li>
       </ul>
+
+
+
+
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" th:checked="${visibility}" th:value="${visibility}" />
+        <label class="form-check-label">Visibile</label>
+      </div>
+      <a th:href="@{'/photos/visibility/' + ${photo.id}} " class="btn btn-primary">Inverti visibilità</a>
+
+
+
+
+
+
+
+
+
+
+
+
+
     </div>
   </div>
 </div>
