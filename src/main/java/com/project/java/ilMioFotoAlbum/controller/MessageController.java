@@ -20,7 +20,9 @@ public class MessageController {
     @GetMapping
     public String getMessage(Model model) {
         List<ContactMessage> contactMessages = contactMessageRepository.findAll();
+        int messageCount = contactMessages.size();
         model.addAttribute("contactMessages", contactMessages);
+        model.addAttribute("messageCount", messageCount);
         return "messages/contact-messages";
     }
 }

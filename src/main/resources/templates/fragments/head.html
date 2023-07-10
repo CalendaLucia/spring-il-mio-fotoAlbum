@@ -10,6 +10,11 @@
     <!-- includo bootstrap css e js -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.3/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/webjars/font-awesome/6.4.0/css/all.min.css}">
+
+    <!-- Condizione per includere il file CSS specifico della pagina di login -->
+    <link th:if="${pageTitle == 'Login'}" rel="stylesheet" href="login.css">
+    <link th:if="${pageTitle == 'Home page'}" rel="stylesheet" href="index.css">
+
     <link rel="stylesheet" href="style.css">
     <script th:src="@{/webjars/bootstrap/5.2.3/js/bootstrap.bundle.min.js}" defer></script>
     <!-- il title della pagina cambia e lo leggo dal parametro del fragment -->

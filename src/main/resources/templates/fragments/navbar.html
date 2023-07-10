@@ -32,10 +32,18 @@
                         <a class="nav-link" th:href="@{/categories}"
                            th:classappend="${current== 'categories' ? 'active' : ''}">Categories</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item position-relative">
                         <a class="nav-link" th:href="@{/messages}"
-                           th:classappend="${current== 'messages' ? 'active' : ''}">Messages</a>
+                           th:classappend="${current == 'messages' ? 'active' : ''}">
+                            Messages
+                            <span class=" badge"
+                                  th:text="${messageCount}"
+                                  th:class="${messageCount > 0 ? 'bg-danger rounded-pill position-absolute top-10 start-20 translate-middle badge ' : ''}">
+            <span th:class="visually-hidden">unread messages</span>
+        </span>
+                        </a>
                     </li>
+
 
 
                     <li class="nav-item dropdown">

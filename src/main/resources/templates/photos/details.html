@@ -8,28 +8,46 @@
   <nav th:replace="~{/fragments/navbar :: navbar(current='Details')}"></nav>
 </div>
 
-<div class="container p-3 mt-5">
-  <h2>Dettaglio della foto</h2>
-  <div class="card w-50 h-50">
-    <img th:src="@{/files/cover/{id}(id=${photo.id})}" class=" w-50 h-50 img-fluid" alt="Immagine">
-    <div class="card-body">
-      <p th:text="|Title: ${photo.title}|" class="card-text"></p>
-      <p th:text="|Description: ${photo.description}|" class="card-text"></p>
+    <div class="container p-3 mt-5 d-flex">
+      <div class="row">
 
-      <h5>Categories:</h5>
-      <ul>
-        <li th:each="category : ${categories}" th:text="${category.name}"></li>
-      </ul>
+        <div class="col-5">
+          <div class="profile-card">
+            <div class="card-image">
+              <img th:src="@{/files/cover/{id}(id=${photo.id})}" class=" w-50 h-50 img-fluid" alt="Immagine">
+            </div>
+          </div>
+        </div>
+
+       <div class="col-6">
+         <div class="card p-3 border-warning bg-light ">
+           <h5 class="card-title text-dark" th:text="|Title: ${photo.title}|"></h5>
+           <p class="card-text text-body" th:text="|Description: ${photo.description}|"></p>
+           <h5>Categories:</h5>
+           <ul class="list-inline">
+             <li th:each="category : ${categories}" class="list-inline-item text-muted" th:text="${category.name}"></li>
+           </ul>
+         </div>
+
+         <div class="col-6 p-3">
+           <form th:action="@{/photos/visibility/{id}(id=${photo.id})}" method="post">
+             <div class="form-check form-switch">
+               <input class="form-check-input" type="checkbox" id="visibilitySwitch" th:checked="${visibility}" th:value="${visibility}" />
+               <label class="form-check-label" for="visibilitySwitch">Toggle Visibility</label>
+             </div>
+             <a th:href="@{'/photos/visibility/' + ${photo.id}} " class="btn btn-dark">Save</a>
+           </form>
+         </div>
 
 
 
-      <form th:action="@{/photos/visibility/{id}(id=${photo.id})}" method="post">
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" th:checked="${visibility}" th:value="${visibility}" />
-        <label class="form-check-label">Visibile</label>
-      </div>
-      <a th:href="@{'/photos/visibility/' + ${photo.id}} " class="btn btn-primary">Inverti visibilità</a>
-      </form>
+
+    </div>
+
+
+
+
+
 
 
 
@@ -43,8 +61,8 @@
 
 
     </div>
-  </div>
-</div>
+    </div>
+
 
 <th:block th:replace="fragments/return-home :: return-home"></th:block>
 
