@@ -24,7 +24,7 @@ public class Photo {
     private String description;
 
     @Lob
-    @Column(length = 16777215)
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] url;
     private boolean visible;
 

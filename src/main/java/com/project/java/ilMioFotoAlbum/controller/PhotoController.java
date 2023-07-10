@@ -79,13 +79,30 @@ public class PhotoController {
     }
 
     @GetMapping("/visibility/{id}")
-    public String setVisibility(@PathVariable("id") Integer photoId,
+    public String getVisibility(@PathVariable("id") Integer photoId,
                                 RedirectAttributes redirectAttributes) {
         Photo photo = photoServices.getById(photoId);
         boolean visibility = !photo.isVisible(); // Inverti il valore utilizzando l'operatore XOR
         photoServices.setPhotoVisibility(photoId, visibility);
         redirectAttributes.addAttribute("visibility", visibility);
         return "redirect:/photos/{id}";
+    }
+
+    //metodo controller per salvare la visibilità della foto su database
+    @PostMapping("/visibility/{id}")
+    public String setVisibility(@ModelAttribute("photo")Photo photo,
+                        @RequestParam("selected") Boolean selected
+                      ){
+
+        // Recupero gli ingredienti selezionati dal repository delle categorie usando gli ID
+        List<Photo> selectedValue = photoRepository.findByVisible(selected);
+        //imposto il valore selezionato sulla foto
+
+        photo.setVisible(selected);
+        //chiedo a photoservice di salvare su db una foto a partire da formPhoto
+        Photo createdPhoto = photoServices.setPhotoVisibility(photo.getId(), photo.isVisible());
+        return "redirect:/photos";
+
     }
 
 

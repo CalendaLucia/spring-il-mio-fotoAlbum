@@ -15,6 +15,8 @@ public interface PhotoRepository extends JpaRepository<Photo, Integer> {
                                                                                                   String description,
                                                                                                   String categoryName);
 
+    List<Photo> findByVisible(Boolean visible);
+
 
 
 

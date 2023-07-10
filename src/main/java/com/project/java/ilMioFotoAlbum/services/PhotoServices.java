@@ -116,6 +116,10 @@ public class PhotoServices {
 
     }
 
+    public List<Photo> getVisiblePhotos() {
+        return photoRepository.findByVisible(true);
+    }
+
 
 
 

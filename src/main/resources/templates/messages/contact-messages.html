@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head th:insert="~{/fragments/head :: head(pageTitle='Contact messages')}"></head>
+
+<body>
+<div class="container-fluid p-3">
+  <nav th:replace="~{/fragments/navbar :: navbar(current='Contact messages')}"></nav>
+</div>
+
+<div class="container p-3 mt-5">
+  <h1>Contact Messages</h1>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Email</th>
+      <th>Message</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Loop through the contact messages -->
+    <tr th:each="message : ${contactMessages}">
+      <td th:text="${message.email}"></td>
+      <td th:text="${message.message}"></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+</body>
+</html>
