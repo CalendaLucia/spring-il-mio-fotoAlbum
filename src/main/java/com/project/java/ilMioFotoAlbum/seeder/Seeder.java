@@ -32,6 +32,7 @@ public class Seeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+
         File directory = new ClassPathResource("seeder_images").getFile();
         List<Photo> images = new ArrayList<>();
         List<Category> categories = new ArrayList<>();
@@ -49,9 +50,12 @@ public class Seeder implements CommandLineRunner {
                 Photo img = new Photo();
                 byte[] bytes = Files.readAllBytes(Path.of(file.getPath()));
                 img.setUrl(bytes);
-                img.setTitle("All you need is win");
-                img.setDescription("description photo");
+                img.setTitle("Add a title");
+                img.setDescription("add a photo");
                 img.setCategories(categories);
+                //setto le prime due foto a true, cosi da avere qualcosa da mostrare nel frontend.
+                // é cmq possibile cambiare la visibilità nella pagina details del backend
+                img.setVisible(true);
                 images.add(img);
             }catch (IOException e) {
                 System.out.println("unable to read file");
