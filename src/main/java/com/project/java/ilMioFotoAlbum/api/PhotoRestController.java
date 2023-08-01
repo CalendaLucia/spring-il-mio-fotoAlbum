@@ -1,5 +1,6 @@
 package com.project.java.ilMioFotoAlbum.api;
 
+import com.project.java.ilMioFotoAlbum.model.Category;
 import com.project.java.ilMioFotoAlbum.model.ContactMessage;
 import com.project.java.ilMioFotoAlbum.model.Photo;
 import com.project.java.ilMioFotoAlbum.repository.CategoryRepository;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -96,5 +99,12 @@ public class PhotoRestController {
     }
 
 
+    //recupero le categorie da sole
+
+    @GetMapping("/categories")
+    public List<Category> getAllCategories() {
+        return categoryRepository.findAll();
+
+    }
 
 }

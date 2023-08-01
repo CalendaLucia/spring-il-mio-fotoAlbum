@@ -1,3 +1,4 @@
+
 package com.project.java.ilMioFotoAlbum.seeder;
 
 import com.project.java.ilMioFotoAlbum.model.Category;
@@ -39,24 +40,36 @@ public class Seeder implements CommandLineRunner {
 
         Category category1= new Category();
         category1.setName("Nature");
-        categories.add(category1);
+        if (category1.getName().isEmpty()) {
+            categories.add(category1);
+        }
+
 
         Category category2 = new Category();
         category2.setName("Peace");
-        categories.add(category2);
+        if (category2.getName().isEmpty()) {
+            categories.add(category2);
+        }
+
 
         for (File file : directory.listFiles()) {
             try {
+
                 Photo img = new Photo();
                 byte[] bytes = Files.readAllBytes(Path.of(file.getPath()));
                 img.setUrl(bytes);
                 img.setTitle("Add a title");
                 img.setDescription("add a photo");
                 img.setCategories(categories);
-                //setto le prime due foto a true, cosi da avere qualcosa da mostrare nel frontend.
-                // é cmq possibile cambiare la visibilità nella pagina details del backend
-                img.setVisible(true);
-                images.add(img);
+                img.setVisible(false);
+
+
+                List<Photo> existingPhoto = photoRepository.findByTitle(img.getTitle());
+                if (existingPhoto == null) {
+                    images.add(img);
+                }
+
+
             }catch (IOException e) {
                 System.out.println("unable to read file");
             }
